@@ -1,1 +1,0 @@
-#### asp.net core application based on Gill Cleeren's pluralsight course Building Web Applications with ASP.NET Core MVC
