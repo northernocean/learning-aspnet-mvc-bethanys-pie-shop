@@ -1,0 +1,35 @@
+﻿@page "/birthday"
+
+<h2>What's your birthday</h2>
+<input type="text" @bind="dob">
+<button class="btn btn-primary" @onclick="Submit">Submit</button>
+<hr>
+@if (!string.IsNullOrEmpty(day))
+{
+    <h3>you were born on a @day</h3>     
+}
+else
+{
+    <h3>you were born on a ...</h3>
+}
+
+@code {
+    private string dob = "";
+    private string day = "";
+
+    private void Submit()
+    {
+        if (!string.IsNullOrEmpty(dob))
+        {
+            var success = DateTime.TryParse(dob, out DateTime date);
+            if (success)
+            {
+                day = date.DayOfWeek.ToString();
+            }
+            else
+            {
+                day = string.Empty;
+            }
+        }
+    }
+}
