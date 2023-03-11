@@ -1,0 +1,30 @@
+﻿@using ShoppingCartStarter.Shared.Cart
+@inject HttpClient Http
+
+<div class="d-flex mt-4 border-bottom pb-4">
+    <div class="flex-shrink-0">
+        <img src="/images/test-image.jpg" altText="smart speaker"
+             class="mr-3" alt="Smart Speaker" />
+    </div>
+    <div class="flex-grow-1 ms-3">
+        <h2 class="">@Details.Name</h2>
+        <button class="btn btn-danger" @onclick="OnDeleteClicked">Delete</button>
+    </div>
+    <div>
+        £@Details.Price
+    </div>
+</div>
+
+@code{
+    [Parameter]
+    public Details.Model.LineItem Details { get; set; }
+
+    [Parameter]
+    public EventCallback<Details.Model.LineItem> OnDeleted { get; set; }
+
+    private async Task OnDeleteClicked()
+    {
+        await Http.DeleteAsync($"api/cart/lines/{Details.Id}");
+        await OnDeleted.InvokeAsync(Details);
+    }
+}
