@@ -1,4 +1,5 @@
 ﻿@using ShoppingCartStarter.Shared.Cart
+@using ShoppingCartStarter.Shared.Cart.LineItem
 @using ShoppingCartStarter.Client.Features.Cart.Components
 @inject HttpClient Http
 
@@ -32,8 +33,13 @@
         await Http.DeleteAsync($"api/cart/lines/{Details.Id}");
         await OnDeleted.InvokeAsync(Details);
     }
-    protected void QuantityChanged(int value)
+    protected async Task QuantityChanged(int value)
     {
+        await Http.PutAsJsonAsync("api/cart/lines", new Update.Command
+            {
+                Id = Details.Id,
+                Quantity = value
+            });
         Details.Quantity = value;
     }
 }
