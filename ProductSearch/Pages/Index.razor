@@ -4,7 +4,8 @@
     <div class="form-group">
         <input class="form-control"
             @bind-value="_searchTerm" id="search"
-            placeholder="Product to search for...">
+            placeholder="Product to search for..."
+            @bind-value:event="oninput">
     </div>
 
     @foreach(var item in searchResults)
@@ -23,8 +24,6 @@
     }
 
 </div>
-
-@_searchTerm
 
 @code{
     private string _searchTerm { get; set; }
