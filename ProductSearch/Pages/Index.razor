@@ -6,10 +6,39 @@
             @bind-value="_searchTerm" id="search"
             placeholder="Product to search for...">
     </div>
+
+    @foreach(var item in searchResults)
+    {
+        <div class="row align-items-center border-bottom">
+            <div class="col-sm">
+                <img src="images/@item.Image" class="mr-3">
+            </div>
+            <div class="col-sm">
+                <h5 class="mt-0">@item.Title</h5>
+            </div>
+            <div class="col-sm">
+                <h5 class="mt-0">@item.Price.ToString("c")</h5>
+            </div>
+        </div>
+    }
+
 </div>
 
 @_searchTerm
 
 @code{
     private string _searchTerm { get; set; }
+
+    List<Data.Product> products { get; set; } = new List<Data.Product>
+    {
+        new Data.Product("Smart speaker", 22m, "test-image.png"),
+        new Data.Product("Dumb speaker", 89m, "test-image.png"),
+        new Data.Product("Speaker cable", 12m, "test-image.png"),
+        new Data.Product("T-shirt", 32m, "test-image.png"),
+        new Data.Product("Large TV", 119.99m, "test-image.png"),
+    };
+
+    private IEnumerable<Data.Product> searchResults =>
+        products.Where(c => string.IsNullOrEmpty(_searchTerm) 
+            || c.Title.ToLower().Contains(_searchTerm.ToLower()));
 }
