@@ -1,0 +1,15 @@
+﻿@page "/"
+
+<div class="container">
+    <div class="form-group">
+        <input class="form-control"
+            @bind-value="_searchTerm" id="search"
+            placeholder="Product to search for...">
+    </div>
+</div>
+
+@_searchTerm
+
+@code{
+    private string _searchTerm { get; set; }
+}
